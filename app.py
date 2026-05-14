@@ -397,3 +397,22 @@ if st.button("Next Image"):
     )
 
     st.rerun()
+
+# ============================================================
+# DOWNLOAD RESULTS
+# ============================================================
+
+if os.path.exists(results_file):
+
+    with open(results_file, "rb") as file:
+
+        st.download_button(
+
+            label="Download Results CSV",
+
+            data=file,
+
+            file_name=results_file,
+
+            mime="text/csv"
+        )
