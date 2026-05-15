@@ -35,47 +35,152 @@ st.markdown(
 st.title("Arabic Caption Human Evaluation")
 
 # ============================================================
-# INSTRUCTIONS
+# CONSENT + INSTRUCTIONS PAGE
 # ============================================================
 
-st.markdown("""
-# Evaluation Dimensions | أبعاد التقييم
+if "agreed" not in st.session_state:
 
-### English
+    st.session_state.agreed = False
 
-- **Descriptive adequacy:**  
-Does the caption correctly describe what is visible in the image (objects, scene, action)?
+if not st.session_state.agreed:
 
-- **Affective appropriateness:**  
-Does the emotion or sentiment expressed by the caption fit the image's affective content?
+    st.markdown(
+        """
+# Annotation Instructions | تعليمات المُقيِّم
 
-- **Fluency:**  
-Is the caption grammatical and natural-sounding Arabic?
+## English
+
+Thank you for taking part in this evaluation of Arabic image captioning systems. These instructions explain exactly what you will do. Please read it before starting.
+
+### What you will see
+
+For every image, you will see three Arabic captions, labelled A, B, and C. The captions were produced by three different captioning systems, but you do not know which caption came from which system. The order of A, B, and C is shuffled for each image.
+
+### What you will do
+
+For each image, you will rank the three captions on three things:
+
+1. **Descriptive adequacy:** does the caption correctly describe what is visible in the image (objects, scene, action)?
+2. **Affective appropriateness:** does the emotion or sentiment expressed by the caption fit the image's affective content?
+3. **Fluency:** is the caption grammatical and natural-sounding Arabic?
+
+For each of these three things, give a rank from 1 (best) to 3 (worst).
+
+Ties are allowed. If two captions are equally good (or equally bad) on a dimension, give them the same rank.
+
+Rank each dimension separately. The same caption can be the best on Language and the worst on Emotion. That is fine and expected.
+
+### Things to keep in mind
+
+- Look at the image first.
+- Read all three captions before ranking.
+- Keep the three dimensions separate.
+- Trust your own reading of the image.
+- First impression is the right impression.
+
+### Things to ignore
+
+- Caption length.
+- Which system produced which caption.
+- Your personal style preferences.
+
+### Frequently asked questions
+
+**What if I cannot decide between two captions?**  
+Use a tie.
+
+**What if all three captions are bad?**  
+Rank them anyway.
+
+**What if the image's emotion is genuinely unclear?**  
+Use whichever reading feels most natural to you.
+
+**How long should I spend on each image?**  
+About three to five minutes is typical.
+
+Thank you again for your careful work.
 
 ---
 
-### العربية
+<div dir="rtl" style="text-align: right;">
 
-- **الملاءمة الوصفية:**  
-هل يصف النص ما يظهر في الصورة بشكل صحيح من حيث العناصر والمشهد والأفعال؟
 
-- **الملاءمة العاطفية:**  
-هل يتناسب الشعور أو العاطفة التي يعبر عنها الوصف مع المحتوى العاطفي للصورة؟
+# تعليمات المُقيِّم
 
-- **الطلاقة اللغوية:**  
-هل الوصف مكتوب بلغة عربية سليمة وطبيعية؟
+شكرا لمشاركتك في تقييم أنظمة توليد الأوصاف العربية للصور. توضح هذه التعليمات بدقة ما هو مطلوب منك. يُرجى قراءتها قبل البدء.
 
----
+## ما الذي ستراه
 
-### Ranking Guide | دليل الترتيب
+في كل صورة، ستظهر لك ثلاثة أوصاف باللغة العربية، مُعلمة بالأحرف A وB وC. أُنتجت هذه الأوصاف بواسطة ثلاثة أنظمة مختلفة لتوليد الأوصاف، لكنك لا تعلم أي وصف يخص أي نظام. ترتيب الأحرف A وB وC يُعاد خلطه عشوائيا في كل صورة.
 
-- 1 = Best | الأفضل
-- 2 = متوسط
-- 3 = Worst | الأضعف
+## ما المطلوب منك
 
-Ties are allowed (e.g., 1, 1, 2 if two captions are equally good).  
-يسمح بالتساوي في التقييم (مثال: 1، 1، 2 إذا كان هناك وصفان بنفس الجودة).
-""")
+لكل صورة، سترتب الأوصاف الثلاثة وفق ثلاثة معايير:
+
+1. **الملاءمة الوصفية:** هل ينقل الوصف بدقة ما يظهر في الصورة من أشياء ومشاهد وأفعال؟
+2. **الملاءمة العاطفية:** هل تتناسب العاطفة أو الشعور الذي يعبّر عنه الوصف مع المحتوى العاطفي للصورة؟
+3. **الطلاقة:** هل الوصف مصاغ بعربية سليمة نحويًّا وطبيعية الأسلوب؟
+
+لكل معيار من هذه المعايير الثلاثة، أعطِ رتبة من 1 (الأفضل) إلى 3 (الأسوأ).
+
+التعادل مسموح به. إذا تساوى وصفان في الجودة (أو في الرداءة) على معيار ما، فأعطهما الرتبة نفسها.
+
+رتب كل معيار على حدة. قد يكون الوصف نفسه الأفضل من حيث اللغة والأسوأ من حيث العاطفة، وهذا أمر طبيعي ومتوقع.
+
+## نقاط ينبغي مراعاتها
+
+• انظر إلى الصورة أولا. كوِن انطباعك الخاص حول محتوى الصورة وما تثيره من شعور قبل قراءة الأوصاف.
+
+• اقرأ الأوصاف الثلاثة كاملة قبل الترتيب. هذه عملية مقارنة.
+
+• احرص على استقلال المعايير الثلاثة. لا تدع تميُز الوصف في معيار واحد يدفعك إلى ترتيبه عاليا في المعايير الأخرى.
+
+• ثِق بقراءتك الخاصة للصورة. لا توجد عاطفة "صحيحة" ثابتة لأي صورة، إدراكك الشخصي للصورة هو المرجع.
+
+• الانطباع الأول هو الانطباع الصحيح. لا تعُد إلى الترتيبات السابقة لمراجعتها.
+
+## نقاط ينبغي تجاهلها
+
+• طول الوصف. الوصف القصير ليس بالضرورة أسوأ من الطويل، والعكس صحيح.
+
+• النظام الذي أنتج كل وصف. أنت لا تعلمه، ولا ينبغي محاولة تخمينه.
+
+• تفضيلاتك الأسلوبية الشخصية. رتب ما هو معروض أمامك، لا ما كنت ستكتبه أنت.
+
+## أسئلة شائعة
+
+**ماذا أفعل إذا تعذر علي تمييز الأفضلية بين وصفين؟**  
+استخدم التعادل. التعادل جزء من المنهجية.
+
+**ماذا أفعل إذا كانت الأوصاف الثلاثة كلها سيئة؟**  
+رتبها على أي حال، الأقل سوءا يحصل على الرتبة 1، والتعادل مسموح إذا تساوى أكثر من وصف في السوء.
+
+**ماذا أفعل إذا كانت عاطفة الصورة غامضة فعلا؟**  
+اعتمد على القراءة التي تبدو لك أكثر طبيعية. قد يقرأ المقيمون المختلفون الصورة نفسها بطرق مختلفة، وهذا أمر متوقع.
+
+**كم من الوقت ينبغي أن أمضي على كل صورة؟**  
+ما بين ثلاث وخمس دقائق هو المعتاد. إذا وجدت نفسك تستغرق وقتا أطول بكثير، فقدم أفضل حكم لديك وانتقل إلى الصورة التالية.
+
+شكرا مجددا على دقتك في العمل.
+
+</div>
+""",
+        unsafe_allow_html=True
+    )
+
+    agree = st.checkbox(
+        "I have read the instructions and agree to participate. | أوافق على المشاركة بعد قراءة التعليمات."
+    )
+
+    if agree:
+
+        if st.button("Start Evaluation"):
+
+            st.session_state.agreed = True
+
+            st.rerun()
+
+    st.stop()
 
 # ============================================================
 # ANNOTATOR ID
@@ -84,10 +189,6 @@ Ties are allowed (e.g., 1, 1, 2 if two captions are equally good).
 if "annotator_id" not in st.session_state:
 
     st.session_state.annotator_id = ""
-
-# ------------------------------------------------------------
-# INPUT ONLY IF EMPTY
-# ------------------------------------------------------------
 
 if st.session_state.annotator_id == "":
 
@@ -101,15 +202,11 @@ if st.session_state.annotator_id == "":
             f"results_{annotator_input}.csv"
         )
 
-        # ----------------------------------------------------
-        # CHECK DUPLICATE
-        # ----------------------------------------------------
-
         if os.path.exists(results_file_check):
 
             st.error(
-                "This annotator ID already exists. Please use a different ID.\n\n"
-                "رقم المقيّم مستخدم مسبقاً. الرجاء استخدام رقم مختلف."
+                "This annotator ID already exists.\n\n"
+                "رقم المقيّم مستخدم مسبقاً."
             )
 
             st.stop()
@@ -123,10 +220,6 @@ if st.session_state.annotator_id == "":
             st.rerun()
 
     st.stop()
-
-# ------------------------------------------------------------
-# USE SAVED ANNOTATOR ID
-# ------------------------------------------------------------
 
 annotator_id = (
     st.session_state.annotator_id
@@ -163,6 +256,21 @@ if "current_index" not in st.session_state:
 if st.session_state.current_index >= len(df):
 
     st.success("تم الانتهاء من التقييم. شكراً لك.")
+
+    if os.path.exists(results_file):
+
+        with open(results_file, "rb") as file:
+
+            st.download_button(
+
+                label="Download Results CSV",
+
+                data=file,
+
+                file_name=results_file,
+
+                mime="text/csv"
+            )
 
     st.stop()
 
@@ -245,56 +353,36 @@ for label, caption_data in zip(labels, captions):
 
     st.write(caption_data["text"])
 
-    # --------------------------------------------------------
-    # SAVE TRUE SYSTEM MAPPING
-    # --------------------------------------------------------
-
     results[f"caption_{label}_system"] = (
         caption_data["system"]
     )
 
-    # ========================================================
-    # DESCRIPTIVE ADEQUACY
-    # ========================================================
-
     desc = st.selectbox(
 
-        f"Descriptive Adequacy | الملاءمة الوصفية - Caption {label}",
+        f"Descriptive Adequacy - Caption {label}",
 
         ["Select",1,2,3],
 
         key=f"desc_{st.session_state.current_index}_{label}"
     )
 
-    # ========================================================
-    # AFFECTIVE APPROPRIATENESS
-    # ========================================================
-
     affect = st.selectbox(
 
-        f"Affective Appropriateness | الملاءمة العاطفية - Caption {label}",
+        f"Affective Appropriateness - Caption {label}",
 
         ["Select",1,2,3],
 
         key=f"affect_{st.session_state.current_index}_{label}"
     )
 
-    # ========================================================
-    # FLUENCY
-    # ========================================================
-
     fluency = st.selectbox(
 
-        f"Fluency | الطلاقة اللغوية - Caption {label}",
+        f"Fluency - Caption {label}",
 
         ["Select",1,2,3],
 
         key=f"fluency_{st.session_state.current_index}_{label}"
     )
-
-    # --------------------------------------------------------
-    # SAVE SCORES
-    # --------------------------------------------------------
 
     results[f"desc_{label}"] = desc
 
@@ -308,10 +396,6 @@ for label, caption_data in zip(labels, captions):
 
 if st.button("Next Image"):
 
-    # --------------------------------------------------------
-    # VALIDATION
-    # --------------------------------------------------------
-
     missing_fields = []
 
     for label in labels:
@@ -320,42 +404,27 @@ if st.button("Next Image"):
             f"desc_{st.session_state.current_index}_{label}"
         ] == "Select":
 
-            missing_fields.append(
-                f"Descriptive - {label}"
-            )
+            missing_fields.append(label)
 
         if st.session_state[
             f"affect_{st.session_state.current_index}_{label}"
         ] == "Select":
 
-            missing_fields.append(
-                f"Affective - {label}"
-            )
+            missing_fields.append(label)
 
         if st.session_state[
             f"fluency_{st.session_state.current_index}_{label}"
         ] == "Select":
 
-            missing_fields.append(
-                f"Fluency - {label}"
-            )
-
-    # --------------------------------------------------------
-    # STOP IF MISSING
-    # --------------------------------------------------------
+            missing_fields.append(label)
 
     if len(missing_fields) > 0:
 
         st.error(
-            "Please complete all dropdown fields before continuing.\n\n"
-            "الرجاء تعبئة جميع الحقول قبل المتابعة."
+            "Please complete all fields before continuing."
         )
 
         st.stop()
-
-    # --------------------------------------------------------
-    # SAVE RESULTS
-    # --------------------------------------------------------
 
     results_df = pd.DataFrame([results])
 
@@ -374,15 +443,7 @@ if st.button("Next Image"):
         index=False
     )
 
-    # --------------------------------------------------------
-    # NEXT IMAGE
-    # --------------------------------------------------------
-
     st.session_state.current_index += 1
-
-    # --------------------------------------------------------
-    # SCROLL TO TOP
-    # --------------------------------------------------------
 
     components.html(
         """
@@ -397,22 +458,3 @@ if st.button("Next Image"):
     )
 
     st.rerun()
-
-# ============================================================
-# DOWNLOAD RESULTS
-# ============================================================
-
-if os.path.exists(results_file):
-
-    with open(results_file, "rb") as file:
-
-        st.download_button(
-
-            label="Download Results CSV",
-
-            data=file,
-
-            file_name=results_file,
-
-            mime="text/csv"
-        )
