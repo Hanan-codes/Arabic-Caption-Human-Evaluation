@@ -48,15 +48,16 @@ if not st.session_state.agreed:
         """
 # Annotation Instructions | تعليمات المُقيِّم
 
+
 ## English
 
 Thank you for taking part in this evaluation of Arabic image captioning systems. These instructions explain exactly what you will do. Please read it before starting.
 
-### What you will see
+## What you will see
 
 For every image, you will see three Arabic captions, labelled A, B, and C. The captions were produced by three different captioning systems, but you do not know which caption came from which system. The order of A, B, and C is shuffled for each image.
 
-### What you will do
+## What you will do
 
 For each image, you will rank the three captions on three things:
 
@@ -70,33 +71,39 @@ Ties are allowed. If two captions are equally good (or equally bad) on a dimensi
 
 Rank each dimension separately. The same caption can be the best on Language and the worst on Emotion. That is fine and expected.
 
-### Things to keep in mind
+## Things to keep in mind
 
-- Look at the image first.
-- Read all three captions before ranking.
-- Keep the three dimensions separate.
-- Trust your own reading of the image.
-- First impression is the right impression.
+• Look at the image first. Form your own impression of what is in the image and what it feels like before reading the captions.
 
-### Things to ignore
+• Read all three captions before ranking. This is a comparison.
 
-- Caption length.
-- Which system produced which caption.
-- Your personal style preferences.
+• Keep the three dimensions separate. Do not let a beautiful caption on one dimension carry you into ranking it high on the others.
 
-### Frequently asked questions
+• Trust your own reading of the image. There is no fixed correct emotion for any image — your perception of the image is what matters.
+
+• First impression is the right impression. Do not go back and revise earlier rankings.
+
+## Things to ignore
+
+• Caption length. A short caption is not automatically worse than a long one, and vice versa.
+
+• Which system produced which caption. You do not know and you should not try to guess.
+
+• Your personal style preferences. Rank what is in front of you, not what you would have written.
+
+## Frequently asked questions
 
 **What if I cannot decide between two captions?**  
-Use a tie.
+Use a tie. Ties are part of the protocol.
 
 **What if all three captions are bad?**  
-Rank them anyway.
+Rank them anyway, the least bad is rank 1, and ties are allowed if more than one is equally bad.
 
 **What if the image's emotion is genuinely unclear?**  
-Use whichever reading feels most natural to you.
+Use whichever reading of the image feels most natural to you. Different annotators may read the same image differently, and that is expected.
 
 **How long should I spend on each image?**  
-About three to five minutes is typical.
+About three to five minutes is typical. If you find yourself spending much longer, submit your best judgement and move on.
 
 Thank you again for your careful work.
 
@@ -283,10 +290,17 @@ row = df.iloc[
 ]
 
 # ============================================================
-# IMAGE
+# IMAGE + IMAGE NUMBER
 # ============================================================
 
 image_path = row["image_path"]
+
+current_num = st.session_state.current_index + 1
+total_images = len(df)
+
+st.markdown(
+    f"## Image {current_num} / {total_images}"
+)
 
 st.image(image_path, width=500)
 
@@ -338,7 +352,10 @@ results = {
     annotator_id,
 
     "painting":
-    row["painting"]
+    row["painting"],
+
+    "image_number":
+    current_num
 }
 
 # ============================================================
